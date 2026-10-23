@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENITH CHALLENGE</title>
+
+<style>
+:root {
+  --bg: #080711;
+  --panel: #131020;
+  --purple: #a855f7;
+  --cyan: #22d3ee;
+  --text: #f5f3ff;
+  --muted: #aaa4c5;
+  --green: #4ade80;
+  --red: #fb7185;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at top, #29134a 0%, transparent 48%),
+    var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+header {
+  padding: 22px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff16;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo span { color: var(--cyan); }
+
+.badge {
+  color: var(--cyan);
+  border: 1px solid #22d3ee66;
+  border-radius: 30px;
+  padding: 8px 12px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+main {
+  width: min(900px, 92%);
+  margin: 35px auto;
+}
+
+.hero { text-align: center; margin-bottom: 30px; }
+
+.hero h1 {
+  font-size: clamp(30px, 6vw, 52px);
+  margin: 10px 0;
+  letter-spacing: 2px;
+}
+
+.hero h1 span {
+  color: var(--purple);
+  text-shadow: 0 0 24px #a855f788;
+}
+
+.hero p { color: var(--muted); line-height: 1.7; }
+
+.card {
+  background: #131020eF;
+  border: 1px solid #a855f744;
+  border-radius: 20px;
+  padding: clamp(18px, 4vw, 32px);
+  box-shadow: 0 0 40px #7c3aed12;
+  margin-bottom: 20px;
+}
+
+.hidden { display: none !important; }
+
+.label {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+input {
+  width: 100%;
+  margin: 14px 0;
+  padding: 15px;
+  color: white;
+  background: #080711;
+  border: 1px solid #a855f766;
+  border-radius: 10px;
+  outline: none;
+}
+
+input:focus { border-color: var(--cyan); }
+
+.primary, .secondary {
+  border: 0;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: .2s;
+}
+
+.primary {
+  color: #080711;
+  background: linear-gradient(100deg, var(--purple), var(--cyan));
+}
+
+.primary:hover { transform: translateY(-2px); }
+
+.secondary {
+  color: var(--text);
+  background: #ffffff0d;
+  border: 1px solid #ffffff22;
+}
+
+.full { width: 100%; margin-top: 12px; }
+
+.stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  flex: 1;
+  text-align: center;
+  padding: 15px 5px;
+  background: #ffffff08;
+  border: 1px solid #ffffff13;
+  border-radius: 12px;
+}
+
+.stat strong {
+  display: block;
+  color: var(--cyan);
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+
+.stat small { color: var(--muted); }
+
+.progress {
+  height: 6px;
+  background: #ffffff14;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 18px 0;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+  transition: width .3s;
+}
+
+.timer {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--cyan);
+}
+
+.case-title { font-size: 25px; margin: 12px 0; }
+
+.case-text {
+  line-height: 1.9;
+  color: #ded9f2;
+  white-space: pre-line;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.option {
+  text-align: left;
+  padding: 16px;
+  border-radius: 12px;
+  color: var(--text);
+  background: #ffffff07;
+  border: 1px solid #ffffff20;
+  line-height: 1.5;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--cyan);
+  background: #22d3ee0d;
+}
+
+.option:disabled { cursor: default; opacity: .8; }
+
+.option.correct {
+  border-color: var(--green);
+  background: #4ade8018;
+}
+
+.option.wrong {
+  border-color: var(--red);
+  background: #fb718518;
+}
+
+.feedback {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 10px;
+  line-height: 1.7;
+}
+
+.feedback.good { background: #4ade8015; border: 1px solid #4ade8055; }
+.feedback.bad { background: #fb718515; border: 1px solid #fb718555; }
+
+.result-score {
+  font-size: 58px;
+  color: var(--cyan);
+  font-weight: 900;
+  text-align: center;
+}
+
+.center { text-align: center; }
+
+#leaderboard { line-height: 2; }
+
+footer {
+  color: #827b9d;
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media(max-width: 600px) {
+  header { padding: 18px 4%; }
+  .logo { font-size: 17px; }
+  .badge { font-size: 9px; }
+  .options { grid-template-columns: 1fr; }
+  .stats { gap: 6px; }
+  .stat strong { font-size: 19px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ZENITH <span>clinique CHALLENGE</span></div>
+  <div class="badge">CLINICAL CHALLENGE</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="label">THINK FAST. DIAGNOSE SMART.</div>
+    <h1>THE <span>MEDICAL</span> ARENA</h1>
+    <p>Un défi clinique pour les étudiants, pharmaciens et professionnels de santé.</p>
+  </section>
+
+  <section id="startScreen" class="card">
+    <div class="label">01 / IDENTIFICATION</div>
+    <h2>Prêt à relever le défi ?</h2>
+    <p class="case-text">
+      Analyse le cas clinique, identifie le diagnostic,
+      puis sélectionne la meilleure conduite médicamenteuse.
+      Chaque bonne réponse rapporte des points.
+    </p>
+
+    <label for="playerName">Nom du participant</label>
+    <input id="playerName" maxlength="35" placeholder="Entre ton nom..." />
+
+    <label for="playerRole">Profil</label>
+    <select id="playerRole" style="width:100%;padding:14px;background:#080711;color:white;border:1px solid #a855f766;border-radius:10px;margin:12px 0;">
+      <option>Étudiant en médecine</option>
+      <option>Étudiant en pharmacie</option>
+      <option>Médecin</option>
+      <option>Pharmacien</option>
+      <option>Autre professionnel de santé</option>
+    </select>
+
+    <button class="primary full" onclick="startGame()">START CHALLENGE →</button>
+  </section>
+
+  <section id="gameScreen" class="hidden">
+    <div class="stats">
+      <div class="stat"><strong id="score">0</strong><small>POINTS</small></div>
+      <div class="stat"><strong id="caseNumber">1/5</strong><small>CAS CLINIQUE</small></div>
+      <div class="stat"><strong id="timer" class="timer">30</strong><small>SECONDES</small></div>
+    </div>
+
+    <div class="progress"><div id="progressBar"></div></div>
+
+    <div class="card">
+      <div class="label" id="caseCategory">CASE FILE</div>
+      <h2 class="case-title" id="caseTitle"></h2>
+      <p class="case-text" id="caseText"></p>
+
+      <h3 id="questionTitle">Étape 1 — Quel est le diagnostic le plus probable ?</h3>
+      <div class="options" id="options"></div>
+      <div id="feedback" class="hidden"></div>
+
+      <button id="nextBtn" class="primary full hidden" onclick="nextQuestion()">QUESTION SUIVANTE →</button>
+    </div>
+  </section>
+
+  <section id="resultScreen" class="hidden">
+    <div class="card center">
+      <div class="label">CHALLENGE TERMINÉ</div>
+      <h2 id="resultTitle">Well done!</h2>
+      <div class="result-score" id="finalScore">0</div>
+      <p id="resultMessage"></p>
+      <button class="primary full" onclick="showLeaderboard()">🏆 VOIR LE CLASSEMENT</button>
+      <button class="secondary full" onclick="restartGame()">↻ NOUVELLE PARTIE</button>
+    </div>
+  </section>
+
+  <section id="leaderboardScreen" class="card hidden">
+    <div class="label">HALL OF FAME</div>
+    <h2>🏆 Classement ZENITH</h2>
+    <div id="leaderboard"></div>
+    <button class="primary full" onclick="restartGame()">NOUVEAU CHALLENGE</button>
+    <button class="secondary full" onclick="backToResult()">Retour au résultat</button>
+  </section>
+</main>
+
+<footer>
+  ZENITH MEDICAL BATTLE · Édition scientifique<br>
+  Outil pédagogique uniquement — ne remplace jamais les recommandations cliniques locales.
+</footer>
+
+<script>
+const cases = [
+  {
+    category: "CARDIOLOGY",
+    title: "Case 01 — Chest Pain",
+    text: "Un homme de 58 ans consulte pour une douleur thoracique constrictive depuis 45 minutes, irradiant vers le bras gauche, avec sueurs et nausées. L'ECG montre un sus-décalage du segment ST dans les dérivations antérieures.",
+    diagnosis: [
+      "Reflux gastro-œsophagien",
+      "Syndrome coronarien aigu avec sus-décalage ST",
+      "Péricardite chronique",
+      "Crise de panique"
+    ],
+    correctDiagnosis: 1,
+    diagnosisExplanation: "La douleur typique et le sus-décalage ST évoquent un infarctus aigu du myocarde. C'est une urgence vitale.",
+    medicationQuestion: "Quelle est la conduite prioritaire la plus appropriée ?",
+    medications: [
+      "Rassurer le patient et le renvoyer à domicile",
+      "Administrer systématiquement un AINS et attendre",
+      "Activer immédiatement la filière d'urgence/reperfusion et suivre le protocole ACS local",
+      "Prescrire un IPP seul"
+    ],
+    correctMedication: 2,
+    medicationExplanation: "Un STEMI nécessite une prise en charge urgente et une stratégie de reperfusion rapide. Les traitements complémentaires dépendent des contre-indications et du protocole local."
+  },
+  {
+    category: "INFECTIOUS DISEASES",
+    title: "Case 02 — Urinary Infection",
+    text: "Une femme de 26 ans présente une dysurie et une pollakiurie depuis deux jours. Elle est apyrétique, sans douleur lombaire, sans vomissements. Elle n'est pas enceinte et n'a pas d'antécédent médical connu.",
+    diagnosis: [
+      "Cystite aiguë non compliquée probable",
+      "Pyélonéphrite sévère certaine",
+      "Insuffisance cardiaque",
+      "Appendicite aiguë"
+    ],
+    correctDiagnosis: 0,
+    diagnosisExplanation: "Les symptômes urinaires bas sans fièvre ni douleur lombaire sont compatibles avec une cystite non compliquée. Le diagnostic doit rester clinique et tenir compte des facteurs de risque.",
+    medicationQuestion: "Quel principe de prise en charge est le plus approprié ?",
+    medications: [
+      "Prendre des antibiotiques restants sans avis",
+      "Choisir un antibiotique adapté aux recommandations locales, allergies, grossesse éventuelle et résistances",
+      "Utiliser uniquement un corticoïde",
+      "Ne jamais rechercher de signes d'alerte"
+    ],
+    correctMedication: 1,
+    medicationExplanation: "Le choix dépend des recommandations locales et des facteurs individuels. Fièvre, douleur lombaire, grossesse ou aggravation nécessitent une évaluation adaptée."
+  },
+  {
+    category: "ENDOCRINOLOGY",
+    title: "Case 03 — Hyperglycemia",
+    text: "Un homme de 22 ans atteint de diabète de type 1 présente des vomissements, une douleur abdominale et une respiration profonde et rapide. Sa glycémie est très élevée et les cétones sont positives.",
+    diagnosis: [
+      "Hypoglycémie",
+      "Gastro-entérite simple certaine",
+      "Acidocétose diabétique probable",
+      "Migraine"
+    ],
+    correctDiagnosis: 2,
+    diagnosisExplanation: "L'hyperglycémie, les cétones, les vomissements et la respiration profonde évoquent une acidocétose diabétique, urgence médicale.",
+    medicationQuestion: "Quelle conduite est la plus appropriée ?",
+    medications: [
+      "Évaluation urgente à l'hôpital, bilan électrolytique et traitement protocolisé",
+      "Arrêter définitivement l'insuline",
+      "Donner uniquement une boisson sucrée",
+      "Attendre 24 heures sans surveillance"
+    ],
+    correctMedication: 0,
+    medicationExplanation: "La prise en charge repose sur une réhydratation surveillée, l'insuline selon protocole, la surveillance et la correction des électrolytes. Le potassium doit être évalué avant et pendant le traitement."
+  },
+  {
+    category: "RESPIRATORY",
+    title: "Case 04 — Acute Wheezing",
+    text: "Une patiente de 24 ans connue pour asthme présente une dyspnée aiguë et des sifflements. Elle parle par courtes phrases. Elle est consciente, mais sa respiration est difficile.",
+    diagnosis: [
+      "Exacerbation aiguë d'asthme",
+      "Rhinite allergique isolée",
+      "Otite moyenne",
+      "Gastrite aiguë"
+    ],
+    correctDiagnosis: 0,
+    diagnosisExplanation: "La dyspnée et les sibilants chez une personne asthmatique évoquent une exacerbation aiguë. La difficulté à parler est un signe de gravité.",
+    medicationQuestion: "Quelle conduite est la plus appropriée ?",
+    medications: [
+      "Faire uniquement des inhalations de vapeur",
+      "Donner un sédatif et laisser la patiente seule",
+      "Évaluation urgente, bronchodilatateur inhalé et traitement selon le protocole de gravité",
+      "Arrêter tous les traitements inhalés"
+    ],
+    correctMedication: 2,
+    medicationExplanation: "Une exacerbation avec difficulté à parler demande une évaluation urgente. Le traitement peut inclure un bronchodilatateur inhalé, des corticoïdes systémiques et de l'oxygène si indiqué, selon la gravité et le protocole."
+  },
+  {
+    category: "PHARMACOLOGY",
+    title: "Case 05 — Medication Safety",
+    text: "Un patient de 72 ans traité par warfarine consulte après l'apparition de selles noires et d'une faiblesse importante. Il signale avoir commencé récemment un médicament sans prévenir son médecin.",
+    diagnosis: [
+      "Constipation simple certaine",
+      "Suspicion d'hémorragie digestive sous anticoagulant",
+      "Allergie saisonnière",
+      "Déshydratation légère certaine"
+    ],
+    correctDiagnosis: 1,
+    diagnosisExplanation: "Les selles noires peuvent correspondre à un méléna. Sous anticoagulant, il faut suspecter une hémorragie digestive et évaluer rapidement la gravité.",
+    medicationQuestion: "Quelle est la meilleure conduite ?",
+    medications: [
+      "Ajouter de l'aspirine sans évaluation",
+      "Ignorer les symptômes s'ils diminuent",
+      "Doubler la prochaine dose de warfarine",
+      "Évaluation médicale urgente, contrôle du saignement et revue des traitements/interactions"
+    ],
+    correctMedication: 3,
+    medicationExplanation: "Un saignement suspect sous warfarine nécessite une évaluation urgente. La conduite sur l'anticoagulant et une éventuelle réversion dépend de la gravité et du bilan clinique."
+  }
+];
+
+let player = "";
+let role = "";
+let score = 0;
+let caseIndex = 0;
+let stage = 0;
+let timeLeft = 30;
+let timerId = null;
+let locked = false;
+let diagnosisAnswers = [];
+let medicationAnswers = [];
+
+function startGame() {
+  const name = document.getElementById("playerName").value.trim();
+
+  if (!name) {
+    alert("Entre le nom du participant avant de commencer !");
+    return;
+  }
+
+  player = name;
+  role = document.getElementById("playerRole").value;
+  score = 0;
+  caseIndex = 0;
+  stage = 0;
+  diagnosisAnswers = [];
+  medicationAnswers = [];
+
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.add("hidden");
+  document.getElementById("leaderboardScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  clearInterval(timerId);
+  locked = false;
+  timeLeft = 30;
+
+  const c = cases[caseIndex];
+
+  document.getElementById("score").textContent = score;
+  document.getElementById("caseNumber").textContent =
+    (caseIndex + 1) + "/" + cases.length;
+  document.getElementById("progressBar").style.width =
+    ((caseIndex / cases.length) * 100) + "%";
+
+  document.getElementById("caseCategory").textContent = c.category;
+  document.getElementById("caseTitle").textContent = c.title;
+  document.getElementById("caseText").textContent = c.text;
+  document.getElementById("feedback").className = "hidden";
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  const title = document.getElementById("questionTitle");
+  const options = document.getElementById("options");
+  options.innerHTML = "";
+
+  if (stage === 0) {
+    title.textContent = "Étape 1 — Quel est le diagnostic le plus probable ?";
+    c.diagnosis.forEach((option, index) => {
+      addOption(option, index, c.correctDiagnosis);
+    });
+  } else {
+    title.textContent = "Étape 2 — Quelle conduite médicamenteuse est la plus appropriée ?";
+    c.medications.forEach((option, index) => {
+      addOption(option, index, c.correctMedication);
+    });
+  }
+
+  updateTimer();
+  timerId = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      if (!locked) timeOut();
+    }
+  }, 1000);
+}
+
+function addOption(text, index, correctIndex) {
+  const btn = document.createElement("button");
+  btn.className = "option";
+  btn.textContent = String.fromCharCode(65 + index) + ". " + text;
+  btn.onclick = () => answer(index, correctIndex);
+  document.getElementById("options").appendChild(btn);
+}
+
+function updateTimer() {
+  const timer = document.getElementById("timer");
+  timer.textContent = timeLeft;
+  timer.style.color = timeLeft <= 10 ? "#fb7185" : "#22d3ee";
+}
+
+function answer(selected, correct) {
+  if (locked) return;
+  locked = true;
+  clearInterval(timerId);
+
+  const c = cases[caseIndex];
+  const isCorrect = selected === correct;
+  const buttons = [...document.querySelectorAll(".option")];
+
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correct) btn.classList.add("correct");
+    if (i === selected && !isCorrect) btn.classList.add("wrong");
+  });
+
+  if (stage === 0) diagnosisAnswers.push(isCorrect);
+  else medicationAnswers.push(isCorrect);
+
+  if (isCorrect) {
+    score += 100 + timeLeft * 2;
+  }
+
+  document.getElementById("score").textContent = score;
+
+  let explanation;
+  if (stage === 0) explanation = c.diagnosisExplanation;
+  else explanation = c.medicationExplanation;
+
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback " + (isCorrect ? "good" : "bad");
+  feedback.innerHTML =
+    "<strong>" + (isCorrect ? "✓ Bonne réponse !" : "✕ Réponse incorrecte") +
+    "</strong><br>" + explanation;
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+  document.getElementById("nextBtn").textContent =
+    stage === 0 ? "PASSER AU CHOIX THÉRAPEUTIQUE →" :
+    caseIndex === cases.length - 1 ? "VOIR MON RÉSULTAT →" :
+    "CAS SUIVANT →";
+}
+
+function timeOut() {
+  locked = true;
+  const c = cases[caseIndex];
+  const correct = stage === 0 ? c.correctDiagnosis : c.correctMedication;
+
+  const buttons = [...document.querySelectorAll(".option")];
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correct) btn.classList.add("correct");
+  });
+
+  if (stage === 0) diagnosisAnswers.push(false);
+  else medicationAnswers.push(false);
+
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback bad";
+  feedback.textContent = "Temps écoulé ! " +
+    (stage === 0 ? c.diagnosisExplanation : c.medicationExplanation);
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+  document.getElementById("nextBtn").textContent =
+    stage === 0 ? "PASSER AU CHOIX THÉRAPEUTIQUE →" :
+    caseIndex === cases.length - 1 ? "VOIR MON RÉSULTAT →" :
+    "CAS SUIVANT →";
+}
+
+function nextQuestion() {
+  if (stage === 0) {
+    stage = 1;
+    loadQuestion();
+    return;
+  }
+
+  stage = 0;
+  caseIndex++;
+
+  if (caseIndex >= cases.length) {
+    finishGame();
+  } else {
+    loadQuestion();
+  }
+}
+
+function finishGame() {
+  clearInterval(timerId);
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+  document.getElementById("progressBar").style.width = "100%";
+
+  const correctCount = diagnosisAnswers.filter(Boolean).length +
+    medicationAnswers.filter(Boolean).length;
+
+  document.getElementById("resultTitle").textContent =
+    "Bravo, " + player + " !";
+  document.getElementById("finalScore").textContent = score + " PTS";
+  document.getElementById("resultMessage").textContent =
+    correctCount + " réponses correctes sur 10. Profil : " + role + ".";
+
+  saveResult({
+    name: player,
+    role: role,
+    score: score,
+    correct: correctCount,
+    date: new Date().toLocaleDateString()
+  });
+}
+
+function saveResult(result) {
+  try {
+    const board = JSON.parse(localStorage.getItem("zenithBattleScores") || "[]");
+    board.push(result);
+    board.sort((a, b) => b.score - a.score);
+    localStorage.setItem("zenithBattleScores", JSON.stringify(board.slice(0, 50)));
+  } catch (e) {
+    console.warn("Le classement local n'a pas pu être sauvegardé.", e);
+  }
+}
+
+function showLeaderboard() {
+  document.getElementById("resultScreen").classList.add("hidden");
+  document.getElementById("leaderboardScreen").classList.remove("hidden");
+
+  let board = [];
+  try {
+    board = JSON.parse(localStorage.getItem("zenithBattleScores") || "[]");
+  } catch (e) {}
+
+  const container = document.getElementById("leaderboard");
+
+  if (!board.length) {
+    container.textContent = "Aucun résultat enregistré pour le moment.";
+    return;
+  }
+
+  container.innerHTML = "";
+  board.slice(0, 10).forEach((entry, i) => {
+    const row = document.createElement("div");
+    row.style.cssText =
+      "padding:10px;border-bottom:1px solid #ffffff16;display:flex;justify-content:space-between;gap:10px;";
+
+    const name = document.createElement("span");
+    name.textContent = (i + 1) + ". " + entry.name + " — " + entry.role;
+
+    const points = document.createElement("strong");
+    points.style.color = "#22d3ee";
+    points.textContent = entry.score + " pts";
+
+    row.append(name, points);
+    container.appendChild(row);
+  });
+}
+
+function backToResult() {
+  document.getElementById("leaderboardScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+}
+
+function restartGame() {
+  clearInterval(timerId);
+  document.getElementById("resultScreen").classList.add("hidden");
+  document.getElementById("leaderboardScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("startScreen").classList.remove("hidden");
+  document.getElementById("playerName").value = "";
+}
+</script>
+</body>
+</html>
