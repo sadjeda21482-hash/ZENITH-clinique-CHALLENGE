@@ -17,7 +17,9 @@
   --border: #214d39;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -35,8 +37,8 @@ body.danger {
 }
 
 @keyframes dangerFlash {
-  from { box-shadow: inset 0 0 0 2px #ff304f; }
-  to { box-shadow: inset 0 0 35px #ff304f; }
+  from { box-shadow: inset 0 0 0 2px var(--red); }
+  to { box-shadow: inset 0 0 35px var(--red); }
 }
 
 header {
@@ -54,7 +56,9 @@ header {
   letter-spacing: 2px;
 }
 
-.logo span { color: var(--green); }
+.logo span {
+  color: var(--green);
+}
 
 .badge {
   border: 1px solid var(--red);
@@ -62,6 +66,7 @@ header {
   padding: 7px 12px;
   font-size: 11px;
   letter-spacing: 2px;
+  text-align: center;
 }
 
 main {
@@ -77,35 +82,48 @@ main {
   box-shadow: 0 0 35px #0b2819;
 }
 
-.hidden { display: none !important; }
+.hidden {
+  display: none !important;
+}
 
-h1, h2, h3 { margin-top: 0; }
+h1, h2, h3 {
+  margin-top: 0;
+}
 
 h1 {
   font-size: clamp(29px, 6vw, 52px);
   line-height: 1.1;
 }
 
-h1 span { color: var(--green); }
+h1 span {
+  color: var(--green);
+}
 
-h2 { font-size: clamp(21px, 4vw, 30px); }
+h2 {
+  font-size: clamp(21px, 4vw, 30px);
+}
 
-p { line-height: 1.65; }
+p {
+  line-height: 1.65;
+}
 
-.muted { color: var(--muted); }
+.muted {
+  color: var(--muted);
+}
 
 .robot-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin: 18px 0 25px;
+  margin: 22px 0;
   flex-wrap: wrap;
 }
 
 .robot {
   width: 130px;
   height: 110px;
+  flex-shrink: 0;
   position: relative;
   background: linear-gradient(145deg, #26372e, #090d0b);
   border: 3px solid var(--green);
@@ -149,6 +167,12 @@ p { line-height: 1.65; }
   background: var(--red);
   border-radius: 50%;
   box-shadow: 0 0 15px var(--red);
+  animation: blinkEyes 4s infinite;
+}
+
+@keyframes blinkEyes {
+  0%, 45%, 48%, 100% { transform: scaleY(1); }
+  46%, 47% { transform: scaleY(.1); }
 }
 
 .mouth {
@@ -241,8 +265,14 @@ button:disabled {
   font-size: clamp(18px, 4vw, 26px);
 }
 
-#timer { color: var(--green); }
-#timer.urgent { color: var(--red); animation: blink .5s infinite; }
+#timer {
+  color: var(--green);
+}
+
+#timer.urgent {
+  color: var(--red);
+  animation: blink .5s infinite;
+}
 
 @keyframes blink {
   50% { opacity: .3; }
@@ -277,11 +307,11 @@ button:disabled {
 .scanner {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
   flex-wrap: wrap;
   border: 1px dashed #426b53;
   background: #06110b;
-  padding: 15px;
+  padding: 18px;
   border-radius: 10px;
   margin: 16px 0;
 }
@@ -297,6 +327,7 @@ button:disabled {
   color: var(--red);
   font-size: 30px;
   text-shadow: 0 0 15px var(--red);
+  flex-shrink: 0;
 }
 
 .patient:before {
@@ -403,11 +434,12 @@ button:disabled {
 .secret-code {
   font-size: clamp(23px, 5vw, 38px);
   color: var(--green);
-  letter-spacing: 6px;
+  letter-spacing: 5px;
   border: 1px dashed var(--green);
   padding: 18px;
   margin: 18px 0;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .score-big {
@@ -439,13 +471,35 @@ footer {
 }
 
 @media(max-width:550px) {
-  header { padding: 15px 4%; }
-  .logo { font-size: 16px; }
-  .badge { font-size: 9px; }
-  .stats { gap: 5px; }
-  .clues { grid-template-columns: 1fr; }
-  .clue { min-height: 48px; }
-  .mission-list { grid-template-columns: 1fr; }
+  header {
+    padding: 15px 4%;
+  }
+
+  .logo {
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  .badge {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .stats {
+    gap: 5px;
+  }
+
+  .clues {
+    grid-template-columns: 1fr;
+  }
+
+  .clue {
+    min-height: 48px;
+  }
+
+  .mission-list {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -466,18 +520,22 @@ footer {
   <h1>LE LABORATOIRE<br><span>INTERDIT</span></h1>
 
   <p class="muted">
-    Le système de sécurité est compromis. Quatre dossiers médicaux
-    restent verrouillés. Résolvez les cas, récupérez les codes
-    et affrontez le système central avant la fin du compte à rebours.
+    Le système de sécurité est compromis. Huit questions cliniques
+    et deux défis du Boss vous attendent. Analysez les indices,
+    sécurisez les dossiers et terminez avant la fin du compte à rebours.
   </p>
 
   <div class="robot-wrap">
     <div class="robot" aria-label="Robot de sécurité">
-      <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+      <div class="eyes">
+        <div class="eye"></div>
+        <div class="eye"></div>
+      </div>
       <div class="mouth"></div>
     </div>
+
     <div class="speech" id="homeSpeech">
-      « ACCÈS REFUSÉ. Vous avez 180 secondes. Prouvez vos compétences. »
+      « ACCÈS REFUSÉ. Vous avez 120 secondes. Prouvez vos compétences. »
     </div>
   </div>
 
@@ -486,22 +544,25 @@ footer {
       <strong>01 — CHOC HÉMORRAGIQUE</strong>
       <span class="muted">Identifier les signes d'urgence.</span>
     </div>
+
     <div class="mission-card">
       <strong>02 — SEPSIS</strong>
       <span class="muted">Reconnaître une infection grave.</span>
     </div>
+
     <div class="mission-card">
       <strong>03 — REIN EN DANGER</strong>
-      <span class="muted">Évaluer une insuffisance rénale aiguë.</span>
+      <span class="muted">Évaluer une atteinte rénale possible.</span>
     </div>
+
     <div class="mission-card">
       <strong>04 — NUTRITION</strong>
-      <span class="muted">Distinguer obésité et dénutrition.</span>
+      <span class="muted">Interpréter les risques nutritionnels.</span>
     </div>
   </div>
 
-  <p><strong>Mission :</strong> 20 questions · 4 codes · 1 Boss final</p>
-  <p><strong>Durée :</strong> 3 minutes · <strong>Erreur :</strong> −5 secondes</p>
+  <p><strong>Mission :</strong> 10 questions · 4 codes · 1 défi final</p>
+  <p><strong>Durée :</strong> 2 minutes · <strong>Erreur :</strong> −5 secondes</p>
 
   <div class="button-row">
     <button class="primary" id="startBtn">▶ COMMENCER L'ESCAPE</button>
@@ -516,28 +577,37 @@ footer {
 
 <!-- JEU -->
 <section id="game" class="panel hidden">
+
   <div class="stats">
     <div class="stat">
       <small>Temps restant</small>
-      <strong id="timer">03:00</strong>
+      <strong id="timer">02:00</strong>
     </div>
+
     <div class="stat">
       <small>Score</small>
       <strong id="score">0</strong>
     </div>
+
     <div class="stat">
       <small>Question</small>
-      <strong id="questionCount">1/20</strong>
+      <strong id="questionCount">1/10</strong>
     </div>
   </div>
 
-  <div class="progress-track"><div id="progress"></div></div>
+  <div class="progress-track">
+    <div id="progress"></div>
+  </div>
 
   <div class="robot-wrap">
     <div class="robot">
-      <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+      <div class="eyes">
+        <div class="eye"></div>
+        <div class="eye"></div>
+      </div>
       <div class="mouth"></div>
     </div>
+
     <div class="speech" id="robotSpeech">
       « Le dossier est verrouillé. Analysez les indices. »
     </div>
@@ -557,47 +627,58 @@ footer {
   </div>
 
   <p><strong>Indices du dossier :</strong></p>
+
   <div class="clues" id="clues"></div>
-  <p id="clueText" aria-live="polite">Ouvrez les trois indices pour débloquer les réponses.</p>
+
+  <p id="clueText" aria-live="polite">
+    Ouvrez les trois indices pour débloquer les réponses.
+  </p>
 
   <div class="answers" id="answers"></div>
+
   <div id="feedback" class="feedback hidden" aria-live="polite"></div>
 
   <div class="button-row">
-    <button id="nextBtn" class="primary hidden">QUESTION SUIVANTE →</button>
+    <button id="nextBtn" class="primary hidden">
+      QUESTION SUIVANTE →
+    </button>
+
     <button id="soundGameBtn">🔊 Son</button>
+
     <button id="quitBtn" class="danger-btn">Quitter</button>
   </div>
 </section>
 
-<!-- RESULTAT -->
+<!-- RÉSULTATS -->
 <section id="result" class="panel hidden">
+
   <div class="tag" id="resultTag">MISSION TERMINÉE</div>
+
   <h1 id="resultTitle">RÉSULTAT</h1>
 
   <div class="robot-wrap">
     <div class="robot">
-      <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+      <div class="eyes">
+        <div class="eye"></div>
+        <div class="eye"></div>
+      </div>
       <div class="mouth"></div>
     </div>
+
     <div class="speech" id="resultSpeech">
       « Analyse terminée. »
     </div>
   </div>
 
   <div class="score-big" id="finalScore">0/100</div>
+
   <h2 id="rank">Interne</h2>
+
   <p id="resultDescription" class="muted"></p>
 
   <h3>🔐 Vos codes de mission</h3>
-  <div class="secret-code" id="codesDisplay">----</div>
 
-  <div id="bossArea" class="hidden">
-    <h2>👹 BOSS FINAL : LE SYSTÈME CENTRAL</h2>
-    <p id="bossQuestion"></p>
-    <div class="answers" id="bossAnswers"></div>
-    <div id="bossFeedback" class="feedback hidden"></div>
-  </div>
+  <div class="secret-code" id="codesDisplay">----</div>
 
   <div id="bossVictory" class="hidden">
     <h2 style="color:var(--green)">🔓 SYSTÈME DÉVERROUILLÉ</h2>
@@ -622,8 +703,12 @@ footer {
 <script>
 "use strict";
 
+const $ = id => document.getElementById(id);
+
 /* ============================
-   QUESTIONS ET CAS CLINIQUES
+   10 QUESTIONS
+   8 QUESTIONS CLINIQUES
+   2 QUESTIONS BOSS FINAL
 ============================ */
 
 const missions = [
@@ -638,104 +723,54 @@ const missions = [
           "Pouls rapide et faible",
           "Saignement important"
         ],
-        q: "Quelle complication doit être suspectée en priorité ?",
+        q: "Quelle complication faut-il suspecter ?",
         options: [
           "Un choc hémorragique",
           "Une simple fatigue",
           "Une allergie alimentaire"
         ],
         correct: 0,
-        explanation: "Un saignement important avec des signes d'hypoperfusion peut évoquer un choc hémorragique. C'est une urgence médicale."
+        explanation: "Un saignement important associé à des signes d'hypoperfusion peut évoquer un choc hémorragique. C'est une urgence médicale."
       },
       {
         title: "La priorité",
-        patient: "Le patient présente un saignement abondant et des signes de malaise.",
+        patient: "Un patient présente un saignement abondant et un malaise.",
         clues: [
           "Saignement actif",
           "Altération de l'état général",
           "Risque de mauvaise perfusion"
         ],
-        q: "Quelle est la conduite générale la plus appropriée ?",
+        q: "Quelle est la meilleure conduite ?",
         options: [
           "Attendre que les symptômes disparaissent",
-          "Alerter immédiatement les secours et suivre les gestes de premiers secours adaptés",
+          "Alerter les secours et suivre les gestes de premiers secours adaptés",
           "Donner à boire et laisser le patient seul"
         ],
         correct: 1,
-        explanation: "Un saignement abondant nécessite une prise en charge urgente. Il faut alerter les secours et appliquer les gestes de premiers secours adaptés à la situation."
-      },
-      {
-        title: "Le signe à surveiller",
-        patient: "Après une perte de sang, le patient devient confus et très faible.",
-        clues: [
-          "Confusion",
-          "Faiblesse importante",
-          "Perte de sang récente"
-        ],
-        q: "Quel élément est particulièrement inquiétant ?",
-        options: [
-          "La confusion associée à la perte de sang",
-          "Le fait d'avoir faim",
-          "Une légère envie de dormir après le repas"
-        ],
-        correct: 0,
-        explanation: "La confusion peut traduire une mauvaise perfusion des organes. Dans ce contexte, elle constitue un signe de gravité."
-      },
-      {
-        title: "Le rôle du pharmacien",
-        patient: "Une personne décrit une hémorragie importante au comptoir.",
-        clues: [
-          "Saignement abondant",
-          "Malaise",
-          "Situation potentiellement vitale"
-        ],
-        q: "Quelle action est prioritaire ?",
-        options: [
-          "Chercher un médicament oral pour arrêter le saignement",
-          "Conseiller de revenir le lendemain",
-          "Déclencher une aide médicale urgente"
-        ],
-        correct: 2,
-        explanation: "Le pharmacien doit reconnaître l'urgence, alerter les secours et ne pas retarder la prise en charge."
-      },
-      {
-        title: "Le piège clinique",
-        patient: "Un patient présente une pression artérielle basse après un traumatisme.",
-        clues: [
-          "Traumatisme",
-          "Hypotension",
-          "Possibilité de saignement interne"
-        ],
-        q: "Peut-on exclure une hémorragie interne si aucun sang n'est visible ?",
-        options: [
-          "Oui, toujours",
-          "Non, elle peut être invisible extérieurement",
-          "Oui, si le patient parle"
-        ],
-        correct: 1,
-        explanation: "Une hémorragie interne peut exister sans saignement visible. Une évaluation médicale urgente est nécessaire."
+        explanation: "Un saignement abondant nécessite une aide médicale urgente. Il ne faut pas retarder la prise en charge."
       }
     ]
   },
+
   {
     name: "MISSION 02 — SEPSIS",
     questions: [
       {
         title: "Infection et gravité",
-        patient: "Patient fébrile, confus, respiration rapide et état général altéré.",
+        patient: "Patient fébrile, confus, avec une respiration rapide.",
         clues: [
           "Infection possible",
           "Respiration rapide",
           "Confusion récente"
         ],
-        q: "Quelle complication grave doit être envisagée ?",
+        q: "Quelle complication grave faut-il envisager ?",
         options: [
-          "Un rhume banal uniquement",
+          "Un rhume banal",
           "Un sepsis",
           "Une carence en vitamine C uniquement"
         ],
         correct: 1,
-        explanation: "Une infection associée à une altération de l'état général et à des signes de dysfonction d'organe fait suspecter un sepsis. C'est une urgence."
+        explanation: "Une infection accompagnée de confusion et de signes de gravité peut faire suspecter un sepsis. C'est une urgence."
       },
       {
         title: "Le signe d'alerte",
@@ -747,72 +782,22 @@ const missions = [
         ],
         q: "Quelle réaction est la plus appropriée ?",
         options: [
-          "Évaluation médicale urgente",
+          "Demander une évaluation médicale urgente",
           "Attendre trois jours",
-          "Arrêter toute hydratation sans avis"
+          "Prendre un antibiotique au hasard"
         ],
         correct: 0,
-        explanation: "Une modification de la conscience et une respiration rapide peuvent être des signes de gravité. Il faut demander une aide médicale urgente."
-      },
-      {
-        title: "Antibiotiques",
-        patient: "Un patient suspect de sepsis est pris en charge aux urgences.",
-        clues: [
-          "Infection potentiellement grave",
-          "Évaluation clinique nécessaire",
-          "Traitement à adapter"
-        ],
-        q: "Comment les antibiotiques doivent-ils être utilisés ?",
-        options: [
-          "Au hasard, selon les médicaments disponibles",
-          "Seulement si le patient les demande",
-          "Selon la prise en charge médicale, rapidement si indiqués"
-        ],
-        correct: 2,
-        explanation: "Les antibiotiques et leur choix relèvent d'une prise en charge médicale adaptée. En cas de sepsis, le traitement ne doit pas être retardé lorsque les antibiotiques sont indiqués."
-      },
-      {
-        title: "Surveillance",
-        patient: "Patient avec infection sévère et tension artérielle basse.",
-        clues: [
-          "Hypotension",
-          "Infection",
-          "Risque de défaillance d'organe"
-        ],
-        q: "Quel paramètre est utile à surveiller dans la prise en charge ?",
-        options: [
-          "Uniquement la couleur des cheveux",
-          "Les constantes vitales et l'état de conscience",
-          "Uniquement la pointure"
-        ],
-        correct: 1,
-        explanation: "Les constantes vitales et l'état neurologique contribuent à évaluer la gravité et l'évolution du patient."
-      },
-      {
-        title: "Le choc septique",
-        patient: "Infection grave avec défaillance circulatoire persistante.",
-        clues: [
-          "Infection sévère",
-          "Troubles circulatoires",
-          "Prise en charge intensive possible"
-        ],
-        q: "Le choc septique est :",
-        options: [
-          "Une complication grave du sepsis",
-          "Une infection toujours bénigne",
-          "Un effet normal du sommeil"
-        ],
-        correct: 0,
-        explanation: "Le choc septique est une forme particulièrement grave de sepsis, associée à des troubles circulatoires et métaboliques."
+        explanation: "Une altération de la conscience et une respiration rapide peuvent être des signes de gravité."
       }
     ]
   },
+
   {
-    name: "MISSION 03 — INSUFFISANCE RÉNALE AIGUË",
+    name: "MISSION 03 — REIN EN DANGER",
     questions: [
       {
         title: "La diurèse diminue",
-        patient: "Patient déshydraté, avec une diminution importante des urines.",
+        patient: "Patient déshydraté avec une diminution importante des urines.",
         clues: [
           "Déshydratation possible",
           "Diurèse diminuée",
@@ -821,105 +806,55 @@ const missions = [
         q: "Quelle situation faut-il envisager ?",
         options: [
           "Une insuffisance rénale aiguë possible",
-          "Une amélioration certaine de la fonction rénale",
-          "Une allergie au pollen uniquement"
+          "Une amélioration certaine",
+          "Une allergie au pollen"
         ],
         correct: 0,
-        explanation: "Une diminution de la diurèse peut être un signe d'insuffisance rénale aiguë, mais d'autres causes sont possibles. Une évaluation médicale est nécessaire."
+        explanation: "Une diminution des urines peut être un signe d'insuffisance rénale aiguë. Une évaluation médicale peut être nécessaire."
       },
       {
         title: "Le bilan biologique",
-        patient: "Suspicion d'atteinte rénale aiguë.",
+        patient: "Une atteinte rénale aiguë est suspectée.",
         clues: [
           "Fonction rénale à évaluer",
           "Créatinine sanguine",
           "Contexte clinique essentiel"
         ],
-        q: "Quel marqueur biologique est utilisé pour évaluer la fonction rénale ?",
+        q: "Quel marqueur biologique est important pour évaluer la fonction rénale ?",
         options: [
           "La bilirubine uniquement",
           "La créatinine sanguine",
           "La vitamine D uniquement"
         ],
         correct: 1,
-        explanation: "La créatinine sanguine est un marqueur important. Son interprétation dépend notamment de sa variation, du contexte et des autres données cliniques."
-      },
-      {
-        title: "Médicaments à risque",
-        patient: "Patient avec insuffisance rénale aiguë possible et plusieurs médicaments.",
-        clues: [
-          "Fonction rénale altérée possible",
-          "Polymédication",
-          "Risque iatrogène"
-        ],
-        q: "Quel réflexe pharmaceutique est le plus adapté ?",
-        options: [
-          "Augmenter toutes les doses",
-          "Ignorer les traitements habituels",
-          "Revoir les médicaments et demander un avis clinique adapté"
-        ],
-        correct: 2,
-        explanation: "Certains médicaments nécessitent une adaptation ou une réévaluation selon la fonction rénale et le contexte. Toute modification doit suivre les protocoles et avis appropriés."
-      },
-      {
-        title: "Prévention",
-        patient: "Une personne âgée présente vomissements, diarrhée et signes de déshydratation.",
-        clues: [
-          "Pertes hydriques",
-          "Risque de déshydratation",
-          "Vulnérabilité accrue"
-        ],
-        q: "Quelle complication peut survenir ?",
-        options: [
-          "Une atteinte rénale aiguë",
-          "Une amélioration obligatoire de la fonction rénale",
-          "Une fracture dans tous les cas"
-        ],
-        correct: 0,
-        explanation: "La déshydratation peut contribuer à une insuffisance rénale aiguë. Les personnes vulnérables doivent être évaluées rapidement si les symptômes sont importants."
-      },
-      {
-        title: "Le piège de la créatinine",
-        patient: "Un patient présente une augmentation récente de la créatinine.",
-        clues: [
-          "Créatinine en hausse",
-          "Comparaison aux valeurs antérieures",
-          "Recherche de la cause"
-        ],
-        q: "Quelle interprétation est la plus correcte ?",
-        options: [
-          "La créatinine élevée est toujours sans importance",
-          "Il faut évaluer la variation, le contexte et les causes possibles",
-          "Il faut arrêter tous les médicaments sans avis"
-        ],
-        correct: 1,
-        explanation: "Une augmentation de la créatinine doit être interprétée dans son contexte. Il ne faut pas modifier seul un traitement sans évaluation adaptée."
+        explanation: "La créatinine sanguine est un marqueur important. Son interprétation dépend de son évolution et du contexte clinique."
       }
     ]
   },
+
   {
     name: "MISSION 04 — NUTRITION",
     questions: [
       {
         title: "IMC et interprétation",
-        patient: "Adulte avec un IMC calculé à 32 kg/m².",
+        patient: "Un adulte présente un IMC de 32 kg/m².",
         clues: [
           "IMC = 32 kg/m²",
-          "Adulte",
+          "Patient adulte",
           "Évaluation globale nécessaire"
         ],
-        q: "Dans la classification habituelle de l'OMS chez l'adulte, cet IMC correspond à :",
+        q: "Dans la classification habituelle chez l'adulte, cet IMC correspond à :",
         options: [
           "Une insuffisance pondérale",
           "Une corpulence normale",
           "Une obésité de classe I"
         ],
         correct: 2,
-        explanation: "Chez l'adulte, un IMC de 30 à 34,9 kg/m² correspond habituellement à l'obésité de classe I. L'IMC reste un outil de dépistage et non un diagnostic complet à lui seul."
+        explanation: "Chez l'adulte, un IMC de 30 à 34,9 kg/m² correspond habituellement à l'obésité de classe I. L'IMC ne suffit pas à lui seul pour évaluer la santé."
       },
       {
-        title: "La dénutrition",
-        patient: "Patient âgé avec perte de poids involontaire et baisse des apports alimentaires.",
+        title: "Le risque de dénutrition",
+        patient: "Un patient âgé perd du poids involontairement et mange moins.",
         clues: [
           "Perte de poids involontaire",
           "Apports diminués",
@@ -932,58 +867,47 @@ const missions = [
           "Une allergie systématique"
         ],
         correct: 0,
-        explanation: "Une perte de poids involontaire et une réduction des apports justifient une évaluation nutritionnelle."
-      },
+        explanation: "Une perte de poids involontaire et une diminution des apports justifient une évaluation nutritionnelle."
+      }
+    ]
+  },
+
+  {
+    name: "BOSS FINAL — SYSTÈME CENTRAL",
+    questions: [
       {
-        title: "Le bon indicateur",
-        patient: "Patient suivi pour un risque de dénutrition.",
+        title: "BOSS 01 — Urgence clinique",
+        patient: "Un patient présente une infection suspecte, une confusion nouvelle et une respiration rapide.",
         clues: [
-          "Poids à surveiller",
-          "Apports alimentaires",
-          "Évolution clinique"
+          "Infection possible",
+          "Confusion nouvelle",
+          "Respiration rapide"
         ],
-        q: "Quel élément est pertinent pour le suivi ?",
+        q: "Quelle est la meilleure conduite ?",
         options: [
-          "La couleur des yeux",
-          "L'évolution du poids et des apports alimentaires",
-          "Le nombre de chaussures possédées"
+          "Attendre le lendemain",
+          "Organiser une évaluation médicale urgente",
+          "Proposer un antibiotique au hasard"
         ],
         correct: 1,
-        explanation: "Le poids, son évolution, les apports alimentaires et l'évaluation clinique contribuent au dépistage et au suivi de la dénutrition."
+        explanation: "Ces signes peuvent révéler une infection grave. Il faut reconnaître l'urgence et organiser une évaluation médicale rapide."
       },
       {
-        title: "Conseil pharmaceutique",
-        patient: "Un patient demande un produit amaigrissant trouvé sur Internet.",
+        title: "BOSS 02 — Sécurité médicamenteuse",
+        patient: "Un patient avec une possible insuffisance rénale prend plusieurs médicaments.",
         clues: [
-          "Produit non vérifié",
-          "Composition incertaine",
-          "Risque d'interactions"
+          "Fonction rénale possiblement altérée",
+          "Polymédication",
+          "Risque d'effets indésirables"
         ],
-        q: "Quelle réponse est la plus adaptée ?",
+        q: "Quel est le meilleur réflexe pharmaceutique ?",
         options: [
-          "Garantir son efficacité sans vérifier",
-          "Conseiller de doubler la dose",
-          "Vérifier la composition, les risques et orienter vers un professionnel"
+          "Augmenter toutes les doses",
+          "Arrêter tous les traitements sans avis",
+          "Réévaluer les médicaments et demander un avis clinique adapté"
         ],
         correct: 2,
-        explanation: "Les produits amaigrissants peuvent présenter des risques ou interagir avec des traitements. Une évaluation fiable est préférable à une recommandation non vérifiée."
-      },
-      {
-        title: "Nutrition et médicaments",
-        patient: "Patient dénutri prenant plusieurs médicaments.",
-        clues: [
-          "État nutritionnel fragile",
-          "Polymédication",
-          "Risque de complications"
-        ],
-        q: "Quel est le rôle du pharmacien ?",
-        options: [
-          "Contribuer à la revue des traitements et orienter si nécessaire",
-          "Arrêter tous les médicaments sans avis",
-          "Ignorer la perte de poids"
-        ],
-        correct: 0,
-        explanation: "Le pharmacien peut participer à la sécurisation des traitements, repérer les risques et orienter le patient vers une évaluation nutritionnelle ou médicale."
+        explanation: "La fonction rénale peut influencer la sécurité de certains traitements. Toute adaptation doit reposer sur une évaluation appropriée."
       }
     ]
   }
@@ -993,47 +917,59 @@ const missions = [
    ÉTAT DU JEU
 ============================ */
 
-const $ = id => document.getElementById(id);
-
-let missionIndex = 0;
+let allQuestions = [];
 let questionIndex = 0;
 let score = 0;
-let timeLeft = 180;
+let timeLeft = 120;
 let timerInterval = null;
 let soundEnabled = true;
 let cluesOpened = [];
 let answered = false;
 let gameFinished = false;
-let currentCodes = [];
 let wrongAttempts = 0;
-let bossDone = false;
+let bossVictory = false;
+let audioContext = null;
+let currentCodes = [];
+let toastTimer = null;
 
-const codePool = ["7", "2", "9", "4"];
+const missionCodes = ["7", "2", "9", "4"];
 
 function showScreen(screenId) {
-  ["home", "game", "result"].forEach(id => $(id).classList.add("hidden"));
+  ["home", "game", "result"].forEach(id => {
+    $(id).classList.add("hidden");
+  });
+
   $(screenId).classList.remove("hidden");
 }
 
 function toast(message) {
   const el = $("toast");
+
   el.textContent = message;
   el.style.display = "block";
-  clearTimeout(toast.timeout);
-  toast.timeout = setTimeout(() => el.style.display = "none", 2300);
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, 2300);
 }
 
 /* ============================
    SONS
 ============================ */
 
-let audioContext = null;
-
-function playTone(freq = 440, duration = 0.12, type = "sine", volume = 0.04) {
+function playTone(
+  frequency = 440,
+  duration = 0.12,
+  type = "sine",
+  volume = 0.04
+) {
   if (!soundEnabled) return;
 
   try {
-    audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+    audioContext = audioContext ||
+      new (window.AudioContext || window.webkitAudioContext)();
 
     if (audioContext.state === "suspended") {
       audioContext.resume();
@@ -1043,42 +979,52 @@ function playTone(freq = 440, duration = 0.12, type = "sine", volume = 0.04) {
     const gain = audioContext.createGain();
 
     oscillator.type = type;
-    oscillator.frequency.value = freq;
+    oscillator.frequency.value = frequency;
     gain.gain.value = volume;
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
 
     oscillator.start();
+
     gain.gain.exponentialRampToValueAtTime(
       0.001,
       audioContext.currentTime + duration
     );
+
     oscillator.stop(audioContext.currentTime + duration);
+
   } catch (error) {
-    // Le jeu continue même si le navigateur bloque le son.
+    // Le jeu continue si le son n'est pas disponible.
   }
 }
 
 function successSound() {
-  playTone(520, .12, "sine");
-  setTimeout(() => playTone(780, .18, "sine"), 100);
+  playTone(520, 0.12);
+  setTimeout(() => playTone(780, 0.16), 100);
 }
 
 function errorSound() {
-  playTone(150, .25, "sawtooth", .06);
-  setTimeout(() => playTone(95, .28, "sawtooth", .05), 160);
+  playTone(150, 0.22, "sawtooth", 0.05);
+  setTimeout(() => playTone(95, 0.25, "sawtooth", 0.05), 150);
 }
 
 function alarmSound() {
-  playTone(900, .13, "square", .035);
-  setTimeout(() => playTone(500, .13, "square", .035), 160);
+  playTone(900, 0.12, "square", 0.03);
+  setTimeout(() => playTone(500, 0.12, "square", 0.03), 150);
 }
 
 function toggleSound() {
   soundEnabled = !soundEnabled;
-  $("soundBtn").textContent = soundEnabled ? "🔊 Son : activé" : "🔇 Son : désactivé";
-  $("soundGameBtn").textContent = soundEnabled ? "🔊 Son" : "🔇 Son";
+
+  $("soundBtn").textContent = soundEnabled
+    ? "🔊 Son : activé"
+    : "🔇 Son : désactivé";
+
+  $("soundGameBtn").textContent = soundEnabled
+    ? "🔊 Son"
+    : "🔇 Son";
+
   if (soundEnabled) successSound();
 }
 
@@ -1092,18 +1038,29 @@ $("soundGameBtn").addEventListener("click", toggleSound);
 function startGame() {
   clearInterval(timerInterval);
 
-  missionIndex = 0;
+  allQuestions = [];
+
+  missions.forEach(mission => {
+    mission.questions.forEach(question => {
+      allQuestions.push({
+        ...question,
+        missionName: mission.name
+      });
+    });
+  });
+
   questionIndex = 0;
   score = 0;
-  timeLeft = 180;
+  timeLeft = 120;
   cluesOpened = [];
   answered = false;
   gameFinished = false;
-  currentCodes = [];
   wrongAttempts = 0;
-  bossDone = false;
+  bossVictory = false;
+  currentCodes = [];
 
   document.body.classList.remove("danger");
+
   showScreen("game");
   updateStats();
   renderQuestion();
@@ -1116,11 +1073,17 @@ function startGame() {
 
     if (timeLeft <= 30 && timeLeft > 0) {
       document.body.classList.add("danger");
-      if (timeLeft % 2 === 0) alarmSound();
+
+      if (timeLeft % 2 === 0) {
+        alarmSound();
+      }
     }
 
     if (timeLeft <= 0) {
-      finishGame(false, "Le temps est écoulé. Le laboratoire reste verrouillé.");
+      finishGame(
+        false,
+        "Temps écoulé ! Le laboratoire reste verrouillé."
+      );
     }
   }, 1000);
 }
@@ -1134,12 +1097,14 @@ function updateStats() {
     String(seconds).padStart(2, "0");
 
   $("timer").classList.toggle("urgent", timeLeft <= 30);
-  $("score").textContent = score;
-  $("questionCount").textContent =
-    Math.min(missionIndex * 5 + questionIndex + 1, 20) + "/20";
 
-  const answeredCount = missionIndex * 5 + questionIndex;
-  $("progress").style.width = (answeredCount / 20 * 100) + "%";
+  $("score").textContent = score;
+
+  $("questionCount").textContent =
+    Math.min(questionIndex + 1, 10) + "/10";
+
+  $("progress").style.width =
+    (questionIndex / 10 * 100) + "%";
 }
 
 /* ============================
@@ -1147,25 +1112,35 @@ function updateStats() {
 ============================ */
 
 function getCurrentQuestion() {
-  return missions[missionIndex].questions[questionIndex];
+  return allQuestions[questionIndex];
 }
 
 function renderQuestion() {
   if (gameFinished) return;
 
   const q = getCurrentQuestion();
+
+  if (!q) {
+    finishGame(true, "Les dix questions sont terminées.");
+    return;
+  }
+
   cluesOpened = [];
   answered = false;
 
-  $("missionTag").textContent = missions[missionIndex].name;
+  $("missionTag").textContent = q.missionName;
   $("questionTitle").textContent = q.title;
   $("patientText").textContent = q.patient;
+
   $("robotSpeech").textContent =
     "« Analysez les indices. Chaque erreur coûte 5 secondes. »";
 
-  $("clueText").textContent = "Ouvrez les trois indices pour débloquer les réponses.";
+  $("clueText").textContent =
+    "Ouvrez les trois indices pour débloquer les réponses.";
+
   $("feedback").className = "feedback hidden";
   $("feedback").textContent = "";
+
   $("nextBtn").classList.add("hidden");
 
   const clueContainer = $("clues");
@@ -1173,6 +1148,7 @@ function renderQuestion() {
 
   q.clues.forEach((clue, index) => {
     const button = document.createElement("button");
+
     button.className = "clue";
     button.textContent = "🔒 Indice " + (index + 1);
 
@@ -1180,10 +1156,13 @@ function renderQuestion() {
       if (cluesOpened.includes(index) || answered) return;
 
       cluesOpened.push(index);
+
       button.classList.add("opened");
       button.textContent = "🔎 " + clue;
+
       $("clueText").textContent = clue;
-      playTone(330 + index * 100, .1);
+
+      playTone(330 + index * 100, 0.1);
 
       if (cluesOpened.length === 3) {
         unlockAnswers();
@@ -1198,11 +1177,16 @@ function renderQuestion() {
 
   q.options.forEach((option, index) => {
     const button = document.createElement("button");
+
     button.className = "answer";
-    button.textContent = String.fromCharCode(65 + index) + ". " + option;
+    button.textContent =
+      String.fromCharCode(65 + index) + ". " + option;
+
     button.disabled = true;
 
-    button.addEventListener("click", () => selectAnswer(index, button));
+    button.addEventListener("click", () => {
+      selectAnswer(index, button);
+    });
 
     answers.appendChild(button);
   });
@@ -1211,14 +1195,22 @@ function renderQuestion() {
 }
 
 function unlockAnswers() {
-  document.querySelectorAll(".answer").forEach(button => {
+  document.querySelectorAll("#answers .answer").forEach(button => {
     button.disabled = false;
   });
 
-  $("clueText").textContent = "DOSSIER DÉVERROUILLÉ — choisissez votre réponse.";
-  $("robotSpeech").textContent = "« Les indices sont ouverts. Faites le bon choix… »";
+  $("clueText").textContent =
+    "DOSSIER DÉVERROUILLÉ — choisissez votre réponse.";
+
+  $("robotSpeech").textContent =
+    "« Les indices sont ouverts. Faites le bon choix… »";
+
   successSound();
 }
+
+/* ============================
+   RÉPONSES ET SCORE
+============================ */
 
 function selectAnswer(index, button) {
   if (answered || cluesOpened.length !== 3 || gameFinished) return;
@@ -1226,26 +1218,51 @@ function selectAnswer(index, button) {
   answered = true;
 
   const q = getCurrentQuestion();
-  const buttons = [...document.querySelectorAll("#answers .answer")];
+
+  const buttons = [
+    ...document.querySelectorAll("#answers .answer")
+  ];
+
   buttons.forEach(b => b.disabled = true);
 
   const feedback = $("feedback");
   feedback.classList.remove("hidden");
 
   if (index === q.correct) {
-    score += 5;
+    score += 10;
     button.classList.add("correct");
 
     feedback.className = "feedback good";
-    feedback.innerHTML = "<strong>✓ BONNE RÉPONSE ! +5 points</strong><br>" + q.explanation;
 
-    $("robotSpeech").textContent = "« Réponse validée. Accès partiellement rétabli. »";
+    feedback.innerHTML =
+      "<strong>✓ BONNE RÉPONSE ! +10 points</strong><br>" +
+      q.explanation;
+
+    $("robotSpeech").textContent =
+      "« Réponse validée. Continuez, candidat Zenith. »";
+
     successSound();
 
-    if (questionIndex === 4) {
-      currentCodes[missionIndex] = codePool[missionIndex];
-      toast("🔐 Code de mission récupéré : " + codePool[missionIndex]);
+    /*
+      Un code est attribué si la bonne réponse
+      est donnée à la deuxième question de chaque mission.
+    */
+    const codePositions = [1, 3, 5, 7];
+    const codeIndex = codePositions.indexOf(questionIndex);
+
+    if (codeIndex !== -1) {
+      currentCodes[codeIndex] = missionCodes[codeIndex];
+
+      toast(
+        "🔐 Code de mission récupéré : " +
+        missionCodes[codeIndex]
+      );
     }
+
+    if (questionIndex === 9) {
+      bossVictory = true;
+    }
+
   } else {
     button.classList.add("wrong");
     buttons[q.correct].classList.add("correct");
@@ -1254,210 +1271,168 @@ function selectAnswer(index, button) {
     wrongAttempts++;
 
     feedback.className = "feedback bad";
-    feedback.innerHTML = "<strong>✗ ERREUR ! −5 secondes</strong><br>" + q.explanation;
 
-    $("robotSpeech").textContent = "« ERREUR ! Réponse incorrecte. Le système vous surveille. »";
+    feedback.innerHTML =
+      "<strong>✗ ERREUR ! −5 secondes</strong><br>" +
+      q.explanation;
+
+    $("robotSpeech").textContent =
+      "« ERREUR ! Le système vous surveille… »";
+
     errorSound();
-
-    if (timeLeft <= 0) {
-      updateStats();
-      finishGame(false, "Le temps est écoulé après une erreur.");
-      return;
-    }
   }
 
   updateStats();
+
+  if (timeLeft <= 0) {
+    finishGame(
+      false,
+      "Temps écoulé ! Le laboratoire reste verrouillé."
+    );
+    return;
+  }
+
   $("nextBtn").classList.remove("hidden");
-  $("nextBtn").textContent =
-    missionIndex === 3 && questionIndex === 4
-      ? "TERMINER LES MISSIONS →"
-      : "QUESTION SUIVANTE →";
+
+  if (questionIndex === 9) {
+    $("nextBtn").textContent = "TERMINER LE BOSS →";
+  } else if (questionIndex === 7) {
+    $("nextBtn").textContent = "AFFRONTER LE BOSS →";
+  } else {
+    $("nextBtn").textContent = "QUESTION SUIVANTE →";
+  }
 }
+
+/* ============================
+   QUESTION SUIVANTE
+============================ */
 
 function nextQuestion() {
   if (!answered || gameFinished) return;
 
-  if (questionIndex < 4) {
-    questionIndex++;
-    renderQuestion();
+  if (questionIndex >= 9) {
+    finishGame(
+      true,
+      "Vous avez terminé les dix questions du laboratoire !"
+    );
     return;
   }
 
-  if (missionIndex < 3) {
-    missionIndex++;
-    questionIndex = 0;
-    toast("MISSION DÉVERROUILLÉE : " + (missionIndex + 1));
-    renderQuestion();
-    return;
-  }
+  questionIndex++;
 
-  finishGame(true, "Les quatre missions sont terminées.");
+  renderQuestion();
 }
 
 /* ============================
-   BOSS FINAL ET RÉSULTATS
+   RÉSULTATS
 ============================ */
 
-function finishGame(allMissionsCompleted, message) {
+function finishGame(completed, message) {
   if (gameFinished) return;
 
   gameFinished = true;
+
   clearInterval(timerInterval);
   document.body.classList.remove("danger");
 
   showScreen("result");
 
-  $("resultTag").textContent = allMissionsCompleted
-    ? "4 MISSIONS TERMINÉES"
+  $("resultTag").textContent = completed
+    ? "10 QUESTIONS TERMINÉES"
     : "MISSION INTERROMPUE";
 
-  $("resultTitle").textContent = allMissionsCompleted
+  $("resultTitle").textContent = completed
     ? "SURVIVANT DU LABORATOIRE"
     : "FIN DE PARTIE";
 
-  $("finalScore").textContent = score + "/100";
   $("resultSpeech").textContent = message;
+  $("finalScore").textContent = score + "/100";
 
   let rank = "Interne";
-  if (score >= 90) rank = "Expert clinique";
-  else if (score >= 70) rank = "Pharmacien confirmé";
-  else if (score >= 45) rank = "Apprenti pharmacien";
+
+  if (score >= 90) {
+    rank = "Expert clinique";
+  } else if (score >= 70) {
+    rank = "Pharmacien confirmé";
+  } else if (score >= 40) {
+    rank = "Apprenti pharmacien";
+  }
 
   $("rank").textContent = rank;
 
   $("resultDescription").textContent =
-    "Réponses correctes : " + (score / 5) + "/20. " +
+    "Réponses correctes : " + (score / 10) + "/10. " +
     "Erreurs : " + wrongAttempts + ". " +
     "Temps restant : " + $("timer").textContent + ".";
 
   $("codesDisplay").textContent =
-    currentCodes.length ? currentCodes.join(" - ") : "AUCUN CODE";
+    currentCodes.filter(Boolean).join(" - ") || "AUCUN CODE";
 
-  $("bossArea").classList.add("hidden");
   $("bossVictory").classList.add("hidden");
 
-  if (allMissionsCompleted && timeLeft > 0) {
-    $("bossArea").classList.remove("hidden");
-    renderBoss();
-  } else {
-    $("bossQuestion").textContent = "";
-    $("bossAnswers").innerHTML = "";
+  if (completed && bossVictory) {
+    $("bossVictory").classList.remove("hidden");
+    $("resultSpeech").textContent =
+      "« SYSTÈME DÉVERROUILLÉ. Bravo, équipe Zenith ! »";
   }
 
-  $("progress").style.width = allMissionsCompleted ? "100%" : $("progress").style.width;
-  playTone(allMissionsCompleted ? 600 : 180, .3, "sawtooth");
-}
+  $("progress").style.width =
+    completed ? "100%" : $("progress").style.width;
 
-function renderBoss() {
-  bossDone = false;
-
-  $("bossQuestion").textContent =
-    "Un patient présente une infection suspecte, une confusion nouvelle et une respiration rapide. Quelle est la meilleure conduite ?";
-
-  $("bossFeedback").className = "feedback hidden";
-  $("bossAnswers").innerHTML = "";
-
-  const options = [
-    "Attendre le lendemain pour voir l'évolution",
-    "Reconnaître les signes de gravité et organiser immédiatement une évaluation médicale urgente",
-    "Proposer un antibiotique au hasard sans évaluation"
-  ];
-
-  options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.className = "answer";
-    button.textContent = String.fromCharCode(65 + index) + ". " + option;
-
-    button.addEventListener("click", () => {
-      if (bossDone) return;
-      bossDone = true;
-
-      const buttons = [...document.querySelectorAll("#bossAnswers .answer")];
-      buttons.forEach(b => b.disabled = true);
-
-      const feedback = $("bossFeedback");
-      feedback.classList.remove("hidden");
-
-      if (index === 1) {
-        score = Math.min(100, score + 5);
-        button.classList.add("correct");
-        feedback.className = "feedback good";
-        feedback.innerHTML =
-          "<strong>✓ BOSS VAINCU !</strong><br>" +
-          "La reconnaissance des signes de gravité et l'évaluation urgente sont prioritaires.";
-
-        $("bossVictory").classList.remove("hidden");
-        $("resultSpeech").textContent =
-          "« SYSTÈME DÉVERROUILLÉ. Vous avez gagné, équipe Zenith. »";
-
-        successSound();
-      } else {
-        button.classList.add("wrong");
-        buttons[1].classList.add("correct");
-        feedback.className = "feedback bad";
-        feedback.innerHTML =
-          "<strong>✗ BOSS NON VAINCU</strong><br>" +
-          "Une confusion nouvelle et une respiration rapide dans un contexte infectieux sont des signes d'alerte.";
-
-        $("resultSpeech").textContent =
-          "« ACCÈS REFUSÉ. Analysez les signes de gravité. »";
-
-        errorSound();
-      }
-
-      $("finalScore").textContent = score + "/100";
-      $("resultDescription").textContent =
-        "Réponses correctes : " + (score / 5) + "/20. " +
-        "Erreurs : " + wrongAttempts + ".";
-      $("codesDisplay").textContent = currentCodes.join(" - ") || "AUCUN CODE";
-    });
-
-    $("bossAnswers").appendChild(button);
-  });
+  playTone(completed ? 600 : 180, 0.3, "sawtooth");
 }
 
 /* ============================
-   BOUTONS ET CLAVIER
+   BOUTONS
 ============================ */
 
 $("startBtn").addEventListener("click", startGame);
 $("nextBtn").addEventListener("click", nextQuestion);
 
 $("quitBtn").addEventListener("click", () => {
-  if (confirm("Quitter la mission en cours ? Votre progression sera perdue.")) {
+  if (confirm("Quitter la mission en cours ?")) {
     finishGame(false, "Vous avez quitté le laboratoire.");
   }
 });
 
 $("restartBtn").addEventListener("click", () => {
+  clearInterval(timerInterval);
+
+  document.body.classList.remove("danger");
+
   showScreen("home");
+
   $("homeSpeech").textContent =
     "« Vous revenez pour un nouveau défi ? Le laboratoire vous attend. »";
-  document.body.classList.remove("danger");
 });
 
 $("shareBtn").addEventListener("click", async () => {
-  const textResult =
+  const result =
     "PHARMA ESCAPE — PROJECT ZENITH\n" +
     "Score : " + $("finalScore").textContent + "\n" +
     "Rang : " + $("rank").textContent + "\n" +
     "Codes : " + $("codesDisplay").textContent;
 
   try {
-    await navigator.clipboard.writeText(textResult);
+    await navigator.clipboard.writeText(result);
     toast("Résultat copié !");
   } catch (error) {
-    window.prompt("Copiez votre résultat :", textResult);
+    window.prompt("Copiez votre résultat :", result);
   }
 });
 
-/* Prévenir les actions accidentelles pendant une partie */
+/* Avertissement si le joueur quitte la page en cours de partie */
+
 window.addEventListener("beforeunload", event => {
-  if (!gameFinished && !$("game").classList.contains("hidden")) {
+  if (
+    !gameFinished &&
+    !$("game").classList.contains("hidden")
+  ) {
     event.preventDefault();
     event.returnValue = "";
   }
 });
 </script>
+
 </body>
 </html>
